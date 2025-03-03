@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nome": "Camiseta Estilosa",
+        "preco": 29.99,
+        "tags": ["verão", "casual", "estilosa"]
+    },
+    {
+        "id": 2,
+        "nome": "Camiseta Básica",
+        "preco": 19.99,
+        "tags": ["básica", "casual", "confortável"]
+    },
+    {
+        "id": 3,
+        "nome": "Camiseta de Algodão",
+        "preco": 24.99,
+        "tags": ["verão", "confortável", "casual"]
+    }
+]
