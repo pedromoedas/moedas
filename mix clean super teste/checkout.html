@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="orden-confirmation.html">
+    <link rel="stylesheet" href="checkout.html">
+    <link rel="stylesheet" href="index.html">
+    <title>Checkout</title>
+    <style>
+      
+
+        .form-group {
+            margin-bottom: 15px; /* Espaço entre os campos do formulário */
+            padding: 15px;
+            width: 100%;
+        }
+
+        label {
+     
+            font-weight: bold; /* Deixa o rótulo em negrito */
+            padding: 15px;
+            width: 100%;
+        
+        }
+
+        input, select {
+            width: 100%; /* Faz com que os campos ocupem toda a largura do contêiner */
+            padding: 10px; /* Espaço interno nos campos */
+          
+            border-radius: 4px; /* Bordas arredondadas */
+            
+        }
+
+        button {
+            background-color: #4CAF50; /* Cor de fundo do botão */
+            padding: 15px; /* Espaço interno no botão */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="checkout.html">checkout</a></li>
+            
+                
+
+                <li><a href="https://wa.me/qr/PT3WNVOAZ2XAA1">Contato</a></li>  
+
+          
+                
+     
+          
+            </ul>
+            
+        </nav>
+    </header>
+    <main>
+    <h2>Informações do Cliente</h2>
+        <form id="checkout-form">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" required>
+            
+            <label for="address">endereço:</label>
+            <input type="text" id="address" required>
+            
+            <label for="payment">Método de Pagamento:</label>
+            <select id="payment" required>
+                <option value="credit-card">Cartão de Crédito</option>
+                <option value="paypal">PayPal</option>
+                <option value="pix">pix</option>
+
+                <option value="dinheiro">Dinheiro</option>
+            </select>
+            
+            <button onclick="submit">Finalizar Pedido</button>
+        </form>
+        <h2>Resumo do Pedido</h2>
+        <div id="order-summary"></div>
+        
+    </main>
+    
+    <section>
+        <h2></h2>
+        <p>Agora é so finalizar a compra!</p>
+        
+    </section>
+    <footer>
+        <p>&copy; 2023 Produtos de Limpeza</p>
+    </footer>
+    <script>
+        // Recupera o carrinho do localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderSummary = document.getElementById('order-summary');
+
+        // Exibe o resumo do pedido e calcula o total
+        function displayCart() {
+            orderSummary.innerHTML = ''; // Limpa o conteúdo anterior
+            let total = 0; // Inicializa o total
+
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const div = document.createElement('div');
+                    div.textContent = `${item.name} - R$${item.price.toFixed(2)} (Quantidade: ${item.quantity})`;
+                    orderSummary.appendChild(div);
+                    total += item.price * item.quantity; // Calcula o total
+                });
+            
+    } else {
+                orderSummary.textContent = 'Seu carrinho está vazio.';
+            }
+
+            totalPriceElement.textContent = total.toFixed(2); // Atualiza o total na página
+        }
+
+        // Exibe o resumo do pedido
+        function displayCart() {
+            orderSummary.innerHTML = ''; // Limpa o conteúdo anterior
+            if (cart.length > 0) {
+                cart.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.textContent = `${item.name} - R$${item.price.toFixed(2)}`;
+                    
+             
+                    
+                    // Botão para remover o item do carrinho
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'Remover';
+                    removeButton.addEventListener('click', () => {
+                        cart.splice(index, 1); // Remove o item do carrinho
+                        localStorage.setItem('cart', JSON.stringify(cart)); // Atualiza o localStorage
+                        displayCart(); // Atualiza a exibição do carrinho
+                        updateCartCount(); // Atualiza a contagem de itens no carrinho
+                        
+                    });
+
+                    div.appendChild(removeButton); // Adiciona o botão de remover à div
+                    orderSummary.appendChild(div); // Adiciona a div ao resumo do pedido
+                });
+            } else {
+                orderSummary.textContent = 'Seu carrinho está vazio.';
+            }
+            
+        }
+
+    
+
+        // Chama a função para exibir o carrinho ao carregar a página
+        displayCart();
+
+        // Lida com a finalização do pedido
+        document.getElementById('checkout-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const payment = document.getElementById('payment').value;
+
+             // Armazena os dados do cliente no localStorage
+             const orderDetails = {
+                name: name,
+                address: address,
+                payment: payment,
+                cart: cart
+               
+            };
+            localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
+            alert(`Pedido finalizado!\nNome: ${name}\nEndereço: ${address}\nMétodo de Pagamento: ${payment}`);
+            
+            // Limpa o carrinho após a finalização do pedido
+            localStorage.removeItem('cart');
+
+            // Redireciona para a página de confirmação
+            window.location.href = 'order-confirmation.html';
+        });
+    </script>
+</body>
+</html>

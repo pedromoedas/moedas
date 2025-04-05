@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="checkout.html">
+    <title>Confirmação do Pedido</title>
+    
+    <style>
+    .div{
+     
+        font-weight: bold; /* Deixa o rótulo em negrito */
+        padding: 15px;
+        width: 100%;
+    
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Confirmação do Pedido</h1>
+        <header id="mix">
+        <nav>
+            <ul>
+                   
+             <li><a href="https://wa.me/qr/PT3WNVOAZ2XAA1">Contato</a></li>
+            </ul>  
+        </nav>
+    </header>
+    </header>
+    <main>
+        <h2>Obrigado pela sua compra!</h2>
+        <p>Seu pedido foi finalizado com sucesso.</p>
+        
+        </form>
+      
+        <h3>Resumo do Pedido</h3>
+        <div id="order-summary"></div>
+        
+        <h3>Informações do Cliente</h3>
+        <div id="customer-info"></div>
+        
+       
+      
+        <p><a href="index.html">Voltar à Loja</a></p>
+        
+</nav>
+
+    </main>
+    <footer class style="">
+        <p>&copy; 2025 Produtos de Limpeza</p>
+    </footer>
+
+       <script>
+        // Recupera os detalhes do pedido do localStorage
+        const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+
+        if (orderDetails) {
+            // Exibe as informações do cliente
+            document.getElementById('customer-info').innerHTML = `
+                <p>Nome: ${orderDetails.name}</p>
+                <p>Endereço: ${orderDetails.address}</p>
+                <p>Forma de Pagamento: ${orderDetails.payment}</p>
+              
+            `;
+
+            // Exibe o resumo do pedido
+            const orderSummary = document.getElementById('order-summary');
+            orderSummary.innerHTML = ''; // Limpa o conteúdo anterior
+            orderDetails.cart.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = `${item.name} - R$${item.price.toFixed(2)} (Quantidade: ${item.quantity})`;
+                orderSummary.appendChild(div);
+
+            });
+
+            // Exibe o total
+            document.getElementById('total-price').textContent = orderDetails.total;
+        } else {
+            document.getElementById('customer-info').textContent = 'Nenhum pedido encontrado.';
+        }
+    </script>
+            
+            
+
+            
+       
+    
+</body>
+</html>
+<!--         // Limpa o carrinho após a confirmação do pedido
+        localStorage.removeItem('cart');
+    </script>
+    <script src="script.js"></script>
+
